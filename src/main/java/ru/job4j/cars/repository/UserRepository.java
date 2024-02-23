@@ -61,8 +61,8 @@ public class UserRepository {
             session.beginTransaction();
             User user = new User();
             user.setId(userId);
-            session.createQuery("delete User where id = :Id", User.class)
-                    .setParameter("Id", userId).uniqueResult();
+            session.createQuery("delete User as p where p.id = :Id", User.class)
+                    .setParameter("Id", userId).executeUpdate();
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
@@ -101,7 +101,7 @@ public class UserRepository {
         try {
             session.beginTransaction();
             result = Optional.of(session.createQuery(
-                            "from ru.job4j.cars.model.User as p where p.id = :Id", User.class)
+                            "from User as p where p.id = :Id", User.class)
                     .setParameter("Id", userId)
                     .getSingleResult());
             session.getTransaction().commit();
