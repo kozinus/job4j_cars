@@ -26,9 +26,10 @@ public class UserRepository {
             session.beginTransaction();
             session.save(user);
             session.getTransaction().commit();
-            session.close();
         } catch (Exception e) {
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
         return user;
     }
@@ -43,9 +44,10 @@ public class UserRepository {
             session.beginTransaction();
             session.update(user);
             session.getTransaction().commit();
-            session.close();
         } catch (Exception e) {
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
     }
 
@@ -59,12 +61,13 @@ public class UserRepository {
             session.beginTransaction();
             User user = new User();
             user.setId(userId);
-            session.createQuery("delete ru.job4j.cars.model.User where id = :Id", User.class)
+            session.createQuery("delete User where id = :Id", User.class)
                     .setParameter("Id", userId).uniqueResult();
             session.getTransaction().commit();
-            session.close();
         } catch (Exception e) {
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
     }
 
@@ -78,11 +81,12 @@ public class UserRepository {
         try {
             session.beginTransaction();
             result = session.createQuery(
-                    "from ru.job4j.cars.model.User as p order by p.id asc", User.class).list();
+                    "from User as p order by p.id asc", User.class).list();
             session.getTransaction().commit();
-            session.close();
         } catch (Exception e) {
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
         return result;
     }
@@ -101,9 +105,10 @@ public class UserRepository {
                     .setParameter("Id", userId)
                     .getSingleResult());
             session.getTransaction().commit();
-            session.close();
         } catch (Exception e) {
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
         return result;
     }
@@ -119,13 +124,14 @@ public class UserRepository {
         try {
             session.beginTransaction();
             result = session.createQuery(
-                            "from ru.job4j.cars.model.User as p where p.login like ?1", User.class)
+                            "from User as p where p.login like ?1", User.class)
                     .setParameter(1, "%" + key + "%")
                     .list();
             session.getTransaction().commit();
-            session.close();
         } catch (Exception e) {
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
         return result;
     }
@@ -141,13 +147,14 @@ public class UserRepository {
         try {
             session.beginTransaction();
             result = session.createQuery(
-                            "from ru.job4j.cars.model.User as p where p.login = :login", User.class)
+                            "from User as p where p.login = :login", User.class)
                     .setParameter("login", login)
                     .uniqueResultOptional();
             session.getTransaction().commit();
-            session.close();
         } catch (Exception e) {
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
         return result;
     }
