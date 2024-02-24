@@ -59,9 +59,7 @@ public class UserRepository {
         Session session = sf.openSession();
         try {
             session.beginTransaction();
-            User user = new User();
-            user.setId(userId);
-            session.createQuery("delete User as p where p.id = :Id", User.class)
+            session.createQuery("delete User as p where p.id = :Id")
                     .setParameter("Id", userId).executeUpdate();
             session.getTransaction().commit();
         } catch (Exception e) {
