@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "auto_post")
+@Table(name = "post")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -25,18 +25,22 @@ public class Post {
     private LocalDateTime created = LocalDateTime.now().withNano(0).withSecond(0);
 
     @ManyToOne
-    @JoinColumn(name = "auto_user_id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id")
     private List<PriceHistory> prices = new ArrayList<>();
 
-    @ManyToMany
+    @ManyToOne
+    @JoinColumn(name = "car_id")
+    private Car car;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "participates",
-            joinColumns = { @JoinColumn(name = "post_id") },
-            inverseJoinColumns = { @JoinColumn(name = "user_id") }
+            joinColumns = { @JoinColumn(name = "post_id", nullable = false, updatable = false) },
+            inverseJoinColumns = { @JoinColumn(name = "user_id", nullable = false, updatable = false) }
     )
     private List<User> subscribers = new ArrayList<>();
 }

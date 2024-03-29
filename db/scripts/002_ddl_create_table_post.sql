@@ -1,6 +1,6 @@
-create table auto_post(
+create table post(
     id   serial primary key,
     description varchar,
     created timestamp,
-    auto_user_id int references auto_user(id)
+    user_id int not null references auto_user(id)
 );
