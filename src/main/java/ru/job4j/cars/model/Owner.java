@@ -3,6 +3,7 @@ package ru.job4j.cars.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "owners")
@@ -21,4 +22,7 @@ public class Owner {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "owner")
+    private Set<HistoryOwners> historyOwners;
 }
