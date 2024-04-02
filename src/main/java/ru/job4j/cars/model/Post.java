@@ -28,9 +28,9 @@ public class Post {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToOne
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "file_id")
-    private File file;
+    private List<File> files = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id")
