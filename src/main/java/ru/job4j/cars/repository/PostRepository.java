@@ -40,7 +40,7 @@ public class PostRepository {
     }
 
     public List<Post> findAllWithPhotos() {
-        return crudRepository.query("select distinct t from Post t JOIN FETCH t.participates where t.fileId != null order by t.id asc", Post.class);
+        return crudRepository.query("select distinct t from Post t JOIN FETCH t.participates where size(t.files) > 0 order by t.id asc", Post.class);
     }
 
     public List<Post> findAllByBrand(String brand) {
